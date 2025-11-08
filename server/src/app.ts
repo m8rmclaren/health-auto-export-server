@@ -30,7 +30,7 @@ app.use('/api/data', requireWriteAuth, ingesterRouter);
 app.use('/api/metrics', requireReadAuth, metricsRouter);
 app.use('/api/workouts', requireReadAuth, workoutsRouter);
 
-app.get('/api/health', (req: express.Request, res: express.Response) => {
+app.get('/', (req: express.Request, res: express.Response) => {
   res.json({ message: 'Hello world!' });
 });
 
