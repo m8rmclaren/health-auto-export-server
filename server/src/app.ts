@@ -2,10 +2,10 @@ import cors from 'cors';
 import express from 'express';
 
 import mongodb from './database/mongodb';
+import { requireReadAuth, requireWriteAuth } from './middleware/auth';
 import ingesterRouter from './routes/ingester';
 import metricsRouter from './routes/metrics';
 import workoutsRouter from './routes/workouts';
-import { requireReadAuth, requireWriteAuth } from './middleware/auth';
 
 const app = express();
 const port = 3001;
@@ -30,7 +30,7 @@ app.use('/api/data', requireWriteAuth, ingesterRouter);
 app.use('/api/metrics', requireReadAuth, metricsRouter);
 app.use('/api/workouts', requireReadAuth, workoutsRouter);
 
-app.get('/', (req: express.Request, res: express.Response) => {
+app.get('/api/health', (req: express.Request, res: express.Response) => {
   res.json({ message: 'Hello world!' });
 });
 

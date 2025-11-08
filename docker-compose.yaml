@@ -1,6 +1,6 @@
 services:
-  hae-mongo:
-    container_name: hae-mongo
+  mongo:
+    container_name: mongo
     image: mongo:latest
     restart: unless-stopped
     volumes:
@@ -14,8 +14,8 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
       MONGO_INITDB_DATABASE: ${MONGO_DB}
 
-  hae-grafana:
-    container_name: hae-grafana
+  grafana:
+    container_name: grafana
     image: grafana/grafana-oss:latest
     ports:
       - 3000:3000
@@ -26,10 +26,10 @@ services:
     networks:
       - hae_network
     depends_on:
-      - hae-mongo
+      - mongo
 
-  hae-server:
-    container_name: hae-server
+  server:
+    container_name: server
     build:
       context: ./server
       dockerfile: Dockerfile
@@ -45,7 +45,7 @@ services:
       - READ_TOKEN=${READ_TOKEN}
       - WRITE_TOKEN=${WRITE_TOKEN}
     depends_on:
-      - hae-mongo
+      - mongo
     networks:
       - hae_network
     restart: unless-stopped
